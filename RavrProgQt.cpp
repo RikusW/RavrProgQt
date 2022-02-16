@@ -641,7 +641,7 @@ void RavrProgQt::FuseEditFinished() //lost focus so set reserved fuses to 1
 
 //---------------------------------------------------------
 
-char *tohex = "0123456789ABCDEF";
+const char *tohex = "0123456789ABCDEF";
 
 void RavrProgQt::SetFuseEdit()
 {

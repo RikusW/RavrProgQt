@@ -7,6 +7,8 @@ CONFIG += qt debug
 TEMPLATE = app
 TARGET = 
 
+QMAKE_CXXFLAGS += -Wno-unused-parameter
+
 DEPENDPATH += .
 INCLUDEPATH += .
 
