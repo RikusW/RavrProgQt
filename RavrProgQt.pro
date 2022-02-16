@@ -14,9 +14,9 @@ INCLUDEPATH += ../RavrProg
 #QMAKE_LIBDIR += ../RavrProg
 LIBS += -lRavrProg
 
-INCLUDEPATH += ../Rtk
+INCLUDEPATH += ../
 #QMAKE_LIBDIR += ../Rtk
-LIBS += -lRtk
+LIBS += -lRtk-gui
 
 #INCLUDEPATH += ../RavrProg/qextserialport
 #QMAKE_LIBDIR += ../RavrProg/qextserialport/build

@@ -6,7 +6,7 @@
 
 #include <QDialog>
 #include "ui_RavrProgQt.h"
-#include "../Rtk/rtypes.h"
+#include "../Rtk-base/rtypes.h"
 #include <RavrProg.h>
 #include <QScrollArea>
 
