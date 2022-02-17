@@ -9,23 +9,9 @@ TARGET =
 
 QMAKE_CXXFLAGS += -Wno-unused-parameter
 
-DEPENDPATH += .
-INCLUDEPATH += .
-
-INCLUDEPATH += ../RavrProg
-#QMAKE_LIBDIR += ../RavrProg
-LIBS += -lRavrProg
-
 INCLUDEPATH += ../
-#QMAKE_LIBDIR += ../Rtk
-LIBS += -lRtk-gui
-
-#INCLUDEPATH += ../RavrProg/qextserialport
-#QMAKE_LIBDIR += ../RavrProg/qextserialport/build
-#CONFIG(debug, debug|release):LIBS  += -lqextserialportd
-#else:LIBS  += -lqextserialport
-#LIBS += -lusb
-
+INCLUDEPATH += ../RavrProg
+LIBS += -lRavrProg
 
 # Input
 SOURCES += main.cpp
