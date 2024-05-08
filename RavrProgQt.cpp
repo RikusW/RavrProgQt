@@ -217,7 +217,7 @@ void RavrProgQt::Connect()
 		}
 		QString n,s = ui.PortCombo->currentText();
 		char c[300];
-		strcpy(c,s.toAscii().constData());
+		strcpy(c,s.toLatin1().data());
 		printf("Connecting to ->%s\n",c);
 		if(progif->Connect(c)) {
 			progifc = progif;
@@ -341,7 +341,7 @@ void RavrProgQt::ReadFlash()
 		return;
 	}
 	char c[300];
-	strcpy(c,s.toAscii().constData());
+	strcpy(c,s.toLatin1().data());
 	printf("Reading Flash: %s\n",c);
 
 	if(Enter()) {
@@ -365,7 +365,7 @@ void RavrProgQt::WriteFlash()
 		}
 	}
 	char c[300];
-	strcpy(c,s.toAscii().constData());
+	strcpy(c,s.toLatin1().data());
 	printf("Writing Flash %s\n",c);
 
 	if(Enter()) {
@@ -395,7 +395,7 @@ void RavrProgQt::VerifyFlash()
 		}
 	}
 	char c[300];
-	strcpy(c,s.toAscii().constData());
+	strcpy(c,s.toLatin1().data());
 	printf("Verifying Flash %s\n",c);
 
 	if(Enter()) {
@@ -417,7 +417,7 @@ void RavrProgQt::SelectFlash()
 	}
 	ui.lineEdit_Flash->setText(s);
 	char c[300];
-	strcpy(c,s.toAscii().constData());
+	strcpy(c,s.toLatin1().data());
 	printf("Selecting Flash File: %s\n",c);
 }
 
@@ -432,7 +432,7 @@ void RavrProgQt::ReadEeprom()
 		return;
 	}
 	char c[300];
-	strcpy(c,s.toAscii().constData());
+	strcpy(c,s.toLatin1().data());
 	printf("Reading Eeprom: %s\n",c);
 
 	if(Enter()) {
@@ -456,7 +456,7 @@ void RavrProgQt::WriteEeprom()
 		}
 	}
 	char c[300];
-	strcpy(c,s.toAscii().constData());
+	strcpy(c,s.toLatin1().data());
 	printf("Writing Eeprom %s\n",c);
 
 	if(Enter()) {
@@ -483,7 +483,7 @@ void RavrProgQt::VerifyEeprom()
 		}
 	}
 	char c[300];
-	strcpy(c,s.toAscii().constData());
+	strcpy(c,s.toLatin1().data());
 	printf("Verifying Eeprom %s\n",c);
 
 	if(Enter()) {
@@ -504,7 +504,7 @@ void RavrProgQt::SelectEeprom()
 		return;
 	}
 	ui.lineEdit_Eeprom->setText(s);
-	const char *c = s.toAscii().constData();
+	const char *c = s.toLatin1().data();
 	printf("Selecting Eeprom File: %s\n",c);
 }
 
@@ -581,7 +581,7 @@ void RavrProgQt::FuseChecked(int i)
 	}
 	QVariant qv = sender()->property("fuse");
 	if(qv.isValid()) {
-		void *v = qVariantValue<void*>(qv);
+		void *v = qv.value<void*>();
 		AvrFuse *f = (AvrFuse*)v;
 		f->Set(i == Qt::Checked);
 		SetFuseEdit();
@@ -599,7 +599,7 @@ void RavrProgQt::FuseSelected(int i)
 	}
 	QVariant qv = sender()->property("fuse");
 	if(qv.isValid()) {
-		void *v = qVariantValue<void*>(qv);
+		void *v = qv.value<void*>();
 		AvrFuse *f = (AvrFuse*)v;
 		f->Select(i);
 		SetFuseEdit();
@@ -626,8 +626,8 @@ void RavrProgQt::FuseEdited(const QString &s)
 	ui.lineEdit_Fuses->setCursorPosition(i);
 	bIgnore = false;
 
-//	const char *c = s.toAscii().constData();
-//	printf("---%s---\n",s.toAscii().constData());
+//	const char *c = s.toLatin1().data();
+//	printf("---%s---\n",s.toLatin1().data());
 }
 
 //---------------------------------------------------------
@@ -685,7 +685,7 @@ void RavrProgQt::SetupFuseBox(Device *d)
 		}else
 		if(f->child) {
 			QComboBox *cb = new QComboBox(ww);
-			cb->setProperty("fuse",qVariantFromValue((void*)f));
+			cb->setProperty("fuse",QVariant::fromValue((void*)f));
 			QObject::connect(cb,SIGNAL(currentIndexChanged(int)),this,SLOT(FuseSelected(int)));
 			cb->setMinimumWidth(445);
 			cb->setMaximumWidth(445);
@@ -696,7 +696,7 @@ void RavrProgQt::SetupFuseBox(Device *d)
 			}
 		}else{
 			QCheckBox *cb = new QCheckBox((const char *)f->name,ww);
-			cb->setProperty("fuse",qVariantFromValue((void*)f));
+			cb->setProperty("fuse",QVariant::fromValue((void*)f));
 			QObject::connect(cb,SIGNAL(stateChanged(int)),this,SLOT(FuseChecked(int)));
 			cb->setMinimumWidth(445);
 			cb->setMaximumWidth(445);
@@ -722,7 +722,7 @@ void RavrProgQt::UpdateFuseBox()
 			if(o->inherits("QCheckBox")) {
 				QVariant qv = o->property("fuse");
 				if(qv.isValid()) {
-					void *v = qVariantValue<void*>(qv);
+					void *v = qv.value<void*>();
 					AvrFuse *f = (AvrFuse*)v;
 					QCheckBox *cb = (QCheckBox*)o;
 					cb->setCheckState(f->Get() ? Qt::Checked : Qt::Unchecked);
@@ -733,7 +733,7 @@ void RavrProgQt::UpdateFuseBox()
 			if(o->inherits("QComboBox")) {
 				QVariant qv = o->property("fuse");
 				if(qv.isValid()) {
-					void *v = qVariantValue<void*>(qv);
+					void *v = qv.value<void*>();
 					AvrFuse *f = (AvrFuse*)v;
 					QComboBox *cb = (QComboBox*)o;
 					cb->setCurrentIndex(f->GetSelect());
